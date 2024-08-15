@@ -14,11 +14,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.annotation.DirtiesContext.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class CashCardApplicationTests {
 
 	@Autowired
@@ -53,10 +51,10 @@ class CashCardApplicationTests {
 	// The @DirtiesContext annotation is here to indicate that this test "dirties" the context
 	// of other tests, because it has the side effect of creating a new Cash Card in the database.
 	// The way I understand this is that the @DirtiesContext annotation makes this test clean up
-	// after it self, meaning the Cash Card created as part of the test is removed again once the
+	// after itself, meaning the Cash Card created as part of the test is removed again once the
 	// test is finished.
 	void shouldCreateANewCashCard() {
-		CashCard newCashCard = new CashCard(null, 250.00);
+		CashCard newCashCard = new CashCard(null, 250.00, "sarah1");
 		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/cashcards", newCashCard, Void.class);
 		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
